@@ -1,13 +1,9 @@
 
-
-
-
-
 export default function PokemonCard({ pokemon }) {
 
     return <>
         <div>{pokemon.name}</div>
-        <img width={80} src={getPokemonImage(pokemon.url)} />
+        <img width={80} src={getPokemonImage(pokemon.url)} alt={pokemon.name} />
     </>
 }
 
@@ -19,8 +15,9 @@ function getPokemonImage(url) {
 }
 
 function getPokemonId(url) {
-    const id = url.split("https://pokeapi.co/api/v2/pokemon/")[1].split("/")[0];
+    // const id = url.split("httpAs://pokeapi.co/api/v2/pokemon/")[1].split("/")[0];
+    const id = url.split("/").at(-2);
     return id;
 }
 
-// getPokemonId("https://pokeapi.co/api/v2/pokemon/102/");
+getPokemonId("https://pokeapi.co/api/v2/pokemon/102/");

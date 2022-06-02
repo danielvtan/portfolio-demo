@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
-import PokemonCard from "./PokemonCard";
+import PokemonList from "./PokemonList";
 
 
-const pokemonListStyle = {
-    // float: "left",
-    display: "inline-block",
-    width: "200px",
-    height: "100px"
-}
 const searchStyle = {
     margin: "20px"
 }
-const pokeDexContainerStyle = {
-    height: "80px"
-}
+
 export default function PokeDex() {
     const [pokemons, setPokemons] = useState([]);
     const [pokeDex, setPokeDex] = useState([]);
@@ -45,7 +37,7 @@ export default function PokeDex() {
         setSearch(data.target.value);
     }
     const onPokemonSelect =(pokemon)=> {
-        if(pokeDex.length == 3) return alert("Max PokeDex");
+        if(pokeDex.length === 3) return alert("Max PokeDex");
         console.log(pokeDex);
         if(pokeDex.includes(pokemon)) return alert("Already added");
 
@@ -54,29 +46,13 @@ export default function PokeDex() {
     }
     const onPokemonUnSelect =(pokemonToRemove)=> {
 
-        const newPokeDex = [...pokeDex].filter(pokemon => pokemon.name != pokemonToRemove.name);
+        const newPokeDex = [...pokeDex].filter(pokemon => pokemon.name !== pokemonToRemove.name);
         setPokeDex(newPokeDex);
     }
     return <>
         <h1>PokeDex</h1>
-        <ul style={pokeDexContainerStyle}>
-            {
-                pokeDex.map(pokemon => {
-                    return <li key={pokemon.name} style={pokemonListStyle} onClick={()=> onPokemonUnSelect(pokemon)}>
-                        <PokemonCard pokemon={pokemon} />
-                    </li>
-                })
-            }
-        </ul> 
+        <PokemonList list={pokeDex} onPokemonSelect={onPokemonUnSelect} />
         <input style={searchStyle} type="text" placeholder="search pokemon" name="searchPokemon" onChange={onSearchChange} />
-        <ul>
-            {
-                pokemons.filter(pokemon => search.length == 0 || pokemon.name.includes(search)).map(pokemon => {
-                    return <li key={pokemon.name} style={pokemonListStyle} onClick={()=> onPokemonSelect(pokemon)}>
-                        <PokemonCard pokemon={pokemon} />
-                    </li>
-                })
-            }
-        </ul>
+        <PokemonList onPokemonSelect={onPokemonSelect} list={pokemons.filter(pokemon => search.length === 0 || pokemon.name.includes(search))} />
     </>
 }
