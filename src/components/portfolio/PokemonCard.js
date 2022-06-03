@@ -1,6 +1,6 @@
 
 export default function PokemonCard({ pokemon }) {
-
+    console.log("test")
     return <>
         <div>{pokemon.name}</div>
         <img width={80} src={getPokemonImage(pokemon.url)} alt={pokemon.name} />
